@@ -52,27 +52,22 @@ public class AmazonClient {
     }
 
     private void upoadFileTos3bucket(String fileName, File file) {
-      System.out.println("Inside uploads3 bucket");
-      s3client.putObject(new PutObjectRequest(bucketName,fileName,file));//.withCannedAcl(CannedAccessControlList.PublicRead));
-      System.out.println("complete bucket work");
+      this.s3client.putObject(new PutObjectRequest(bucketName,fileName,file));//.withCannedAcl(CannedAccessControlList.PublicRead));
    }
 
-   public String uploadFile(MultipartFile multipartFile)
+   public String uploadFile(MultipartFile[] files)
    { String fileUrl="";
-     try {
-            System.out.println("Inside Upload");
-            File file = convertMultiPartToFile(multipartFile);
-            //System.out.println("After convert");
-            String fileName = generateFileName(multipartFile);
-            //System.out.println("file name generated");
-            fileUrl = endpointUrl + "/" +bucketName + "/" + fileName;
-            System.out.println("file URL generated");
-            upoadFileTos3bucket(fileName,file);
-            System.out.println("uploaded to S3 bucket");
-            file.delete();
-            System.out.println("Upload success");
+     try {  
+
+          for(MultipartFile multipartFile : files)
+             {
+              File file = convertMultiPartToFile(multipartFile);
+              String fileName = generateFileName(multipartFile);
+              fileUrl = endpointUrl + "/" +bucketName + "/" + fileName;
+              upoadFileTos3bucket(fileName,file);
+              file.delete();
+            }
          } catch(Exception e) {
-          System.out.println("Inside excpetion");
             e.printStackTrace();
          }
       return fileUrl;

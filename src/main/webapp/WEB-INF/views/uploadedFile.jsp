@@ -11,10 +11,10 @@
   <hr>
 
   <h2>${sz} files uploaded successfully!</h2>
-  <ol>
+   <ol>
   	<c:forEach items="${files}" var="file">
   	 * ${file} <br>
   	</c:forEach>
-  	</ol> 
+  	</ol>  
   </body>
 </html>
