@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Spring Boot</title>
+<title>Uploaded file</title>
 </head>
 <body>
-  <h1>Spring Boot - MVC web application example</h1>
+  <h1>Succesfully uploaded files</h1>
   <hr>
 
   <h2>${sz} files uploaded successfully!</h2>
