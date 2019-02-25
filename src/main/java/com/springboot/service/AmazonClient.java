@@ -16,6 +16,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 @Service
 public class AmazonClient {
    
@@ -51,6 +56,17 @@ public class AmazonClient {
         return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
     }
 
+    private void printExcel(MultipartFile readExcelDataFile) throws IOException
+    {
+    	XSSFWorkbook workbook = new XSSFWorkbook(readExcelDataFile.getInputStream());
+		XSSFSheet worksheet = workbook.getSheetAt(0);
+				    
+		    for(int i=0;i<worksheet.getPhysicalNumberOfRows()-1 ;i++) {
+		        XSSFRow row = worksheet.getRow(i);
+		        System.out.println(row.getCell(0).getStringCellValue());
+		        System.out.println(row.getCell(1).getStringCellValue());
+		      }
+    }
     private void upoadFileTos3bucket(String fileName, File file) {
       this.s3client.putObject(new PutObjectRequest(bucketName,fileName,file));//.withCannedAcl(CannedAccessControlList.PublicRead));
    }
@@ -65,6 +81,7 @@ public class AmazonClient {
               String fileName = generateFileName(multipartFile);
               fileUrl = endpointUrl + "/" +bucketName + "/" + fileName;
               upoadFileTos3bucket(fileName,file);
+              printExcel(multipartFile);
               file.delete();
             }
          } catch(Exception e) {

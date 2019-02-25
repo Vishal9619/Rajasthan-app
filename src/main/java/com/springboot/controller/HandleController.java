@@ -1,6 +1,5 @@
 package com.springboot.controller;
 
-import com.springboot.service.AmazonClient;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
@@ -15,6 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+
+import com.springboot.service.AmazonClient;
 
 @Controller
 public class HandleController {
@@ -31,19 +36,18 @@ public class HandleController {
    }
 
    @RequestMapping(value="/upload",method=RequestMethod.POST)
-   public String sayHello(@RequestParam(value="fileName") MultipartFile[] files, Model model) throws IllegalStateException, IOException {
+   public String uploadExcelFiles(@RequestParam(value="fileName") MultipartFile[] files, Model model) throws IllegalStateException, IOException {
 	         int sz=0;
 	         //String saveDirectory = "/home/ubuntu/Desktop/";
 	         List<String> fileNames = new ArrayList<String>();
 
-	            this.amazonClient.uploadFile(files);
-	            System.out.println("uploaded to S3");
-	            for(MultipartFile mp : files)
+	         this.amazonClient.uploadFile(files);
+	         for(MultipartFile mp : files)
 	             {   String filename=mp.getOriginalFilename();
 		             //mp.transferTo(new File(saveDirectory + filename));
 		             fileNames.add(filename);
 		             ++sz;
-	            }
+	            }      
 	         model.addAttribute("sz", sz);
 	         model.addAttribute("files",fileNames);
 	         return "uploadedFile";
