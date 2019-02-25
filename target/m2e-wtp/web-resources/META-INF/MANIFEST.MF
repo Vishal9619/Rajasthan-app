@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: spring-boot-web-application-example
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Sunil Singh Bora
-Implementation-Vendor-Id: com.boraji.tutorial.springboot
-Build-Jdk: 1.8.0_131
+Built-By: ankurgoel
+Implementation-Vendor-Id: com.springboot
+Build-Jdk: 1.8.0_151
 Implementation-URL: http://projects.spring.io/spring-boot/spring-boot-
  web-application-example/
 Created-By: Maven Integration for Eclipse
